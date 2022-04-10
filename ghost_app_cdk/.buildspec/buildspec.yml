@@ -1,0 +1,14 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+       - aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.eu-central-1.amazonaws.com
+  build:
+    commands:
+       - docker build --no-cache --pull -t $REPOSITORY_URI:latest .
+       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+  post_build:
+    commands:
+      - echo "push image to ECR"
+      - docker push $REPOSITORY_URI:latest

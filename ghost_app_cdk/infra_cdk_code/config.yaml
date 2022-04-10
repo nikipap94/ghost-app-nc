@@ -1,0 +1,37 @@
+aws_vars:
+  account_1:
+    name: "Dev-Account"
+    description: "Dev Account for deploying the Ghost App"
+    region: # Enter the region you want to deploy the infra
+    env: "dev"
+    accountId: # Enter the account ID of the target account (Dev environment)
+    resources:
+      vpcId: # Enter the vpcID of the target account
+    service_account: # Account in AWS that hosts the all of the source code
+      accountId: # Enter the account ID of the hosting account 
+      region: # Enter the region of the hosting account
+      crossAccountRole: # Enter the ARN of the role created in the hosting account that will allow cross-account access
+      
+    stack_tags: {"Project":"frontendGhostApp", "Owner":"nikipap"}
+    project:
+      shortName: "ghostApp"
+    
+frontend-ghost-app:
+  parameters:
+    code:
+      name: "frontend-ghost-app"
+      sourceRepo: # Enter the name of the repo with the source code
+      sourceBranch: # Branch 
+      buildspec_path: # Enter the ARN of the S3 bucket that has the buildspec file
+      ecr_name: # Enter the name of the ecr repo on AWS
+    ecs:
+      cluster_name: # Cluster name that will host the ECS service/task definition
+      td_cpu: # CPU of task definition
+      td_memory:  # Memory of task definition
+      container_cpu: # Container CPU
+      container_memory: # Container memory
+      host_port: # Host port
+      container_port: # Container port
+    lb:
+      targer_port: # LB port
+      certificate_arn: # Entern the certificate ARN once uploaded in Certificate manager
