@@ -170,21 +170,21 @@ class FeBuildDeploy(Stack):
         
         kms_arn = ssm.StringParameter.from_string_parameter_name(
             self, "kms_arn_string",
-            string_parameter_name=f"{cfg_env}.crossaccount-artifacts-backet-key-{cfg_account_id}.{cfg_project_short_name}.secret"
+            string_parameter_name=f"{cfg_env}.crossaccount-artifacts-bucket-key-{cfg_account_id}.{cfg_project_short_name}.secret"
         ) 
     
         bucket_name = ssm.StringParameter.from_string_parameter_name(
             self, "bucket_name_string",
-            string_parameter_name=f"{cfg_env}.crossaccount-artifacts-backet-name-{cfg_account_id}.{cfg_project_short_name}.name",
+            string_parameter_name=f"{cfg_env}.crossaccount-artifacts-bucket-name-{cfg_account_id}.{cfg_project_short_name}.name",
         ) 
 
         bucket_key = kms.Key.from_key_arn(
-            self, "artbucket_key",
+            self, "bucket_key",
             key_arn=kms_arn.string_value
         )
 
         cross_account_artifacts_bucket = s3.Bucket.from_bucket_attributes(
-                self,  "artbucket",
+                self,  "bucket",
                 bucket_name=bucket_name.string_value,
                 encryption_key=bucket_key
         )
